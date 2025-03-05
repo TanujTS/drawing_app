@@ -7,7 +7,7 @@ body {
     flex-direction: row;
     align-items:center;
     justify-content: center;
-    min-height: 100vh;
+    max-height: 100vh;
     background-image: url("img/wallpaper.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -20,6 +20,7 @@ main {
     width: 100%;
     gap: 10px;
     padding: 10px;
+    justify-content: center;
 }
 
 section {
@@ -168,6 +169,7 @@ section {
 
 .drawing-board{
     flex: 1;
+    max-width: 960px;
 }
 
 .drawing-board canvas{
