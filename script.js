@@ -98,8 +98,11 @@ window.onload = () => {
     }
 
     //event listeners
-    saveImageBtn.addEventListener("onclick", () => {
-        canvas.toDataURL();
+    saveImageBtn.addEventListener("click", () => {
+        const link = document.createElement("a");
+        link.download = `drawing-canvas.png`;
+        link.href = canvas.toDataURL();
+        link.click();
     });
     strokeColorPicker.addEventListener("change", () => {
         strokeColor = strokeColorPicker.value;
@@ -111,7 +114,10 @@ window.onload = () => {
     sizeSlider.addEventListener("change", () => {
         brushWidth = sizeSlider.value/4;
     });
-
+    clearCanvasBtn.addEventListener("click", () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        console.log("cleared");
+    });
     canvas.addEventListener('mousedown', startDraw);
     canvas.addEventListener('mouseup', stopDrawing);
     canvas.addEventListener('mousemove', drawing);
