@@ -11,9 +11,6 @@
 
 </head>
 <body>
-    <!-- Notes for myself:
-     canvas element: used to draw graphics on a web page -->
-
     <script src="https://kit.fontawesome.com/d684ea919a.js" crossorigin="anonymous"></script>
     <main>
         <section class="tools">
@@ -32,10 +29,7 @@
                         <img src="icons/rectangle.svg" alt="">
                         <span> Circle </span>
                     </li>
-                    <li class="option">
-                        <input type="checkbox" id="fill-color">
-                        <label for="fill-color">Fill Color</label>
-                    </li>
+
                 </ul>
             </div>
             <div class="row">
@@ -52,17 +46,13 @@
                     <li class="option">
                         <input type="range" id="size-slider" value = "10">
                     </li>
-                </ul>
-            </div>
-            <div class="row colors">
-                <label for="title" class="title">Colors</label>
-                <ul class="options">
-                    <li class="option"></li>
-                    <li class="option selected"></li>
-                    <li class="option"></li>
-                    <li class="option"></li>
                     <li class="option">
-                        <input type="color" id="color-picker" value="rgb(0, 183, 255)";
+                        <input type="color" id="color-picker" class="input-color">
+                        <label for="color-picker">Stroke Color</label>
+                    </li>
+                    <li class="option">
+                        <input type="color" id="fill-color" class="input-color" value="#FFFFFF">
+                        <label for="fill-color">Fill Color</label>
                     </li>
                 </ul>
             </div>

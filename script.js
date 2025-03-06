@@ -4,15 +4,22 @@ window.onload = () => {
     const canvas = document.querySelector("canvas"),
           ctx = canvas.getContext('2d'),
           toolBtns = document.querySelectorAll(".tool"),
-          sizeSlider = document.getElementById("size-slider");
+          sizeSlider = document.getElementById("size-slider"),
+          fillColorPicker = document.getElementById("fill-color"),
+          strokeColorPicker = document.getElementById("color-picker"),
+          clearCanvasBtn = document.querySelector(".clear-canvas"),
+          saveImageBtn = document.querySelector(".save-image");
 
     canvas.width = canvas.offsetHeight;
     canvas.height = canvas.offsetWidth;
     ctx.lineCap = 'round';
     //variables
     let isDrawing = false,
-        selectedTool = "brush";
-        brushWidth = 3;
+        selectedTool = "brush",
+        brushWidth = 3,
+        strokeColor = "black",
+        fillColor = "white";
+        
 
     // Tool Selection
     toolBtns.forEach(btn => {
@@ -37,6 +44,8 @@ window.onload = () => {
         if (!isDrawing) {
             return;
         }
+        ctx.strokeStyle = strokeColor;
+        ctx.fillStyle = fillColor;
         ctx.lineWidth = brushWidth;
         ctx.putImageData(snapshot, 0, 0);
         switch(selectedTool) {
@@ -68,17 +77,16 @@ window.onload = () => {
 
     function drawRectangle(e) {
         ctx.beginPath();
-        ctx.strokeRect(prevMouseX, prevMouseY, e.offsetX - prevMouseX , e.offsetY - prevMouseY);
+        ctx.fillRect(prevMouseX, prevMouseY, e.offsetX - prevMouseX , e.offsetY - prevMouseY);
     }
 
     function drawCircle(e) {
         let radius = Math.sqrt(Math.pow(e.offsetX - prevMouseX, 2) + Math.pow(e.offsetY - prevMouseY, 2)) / 2;
         ctx.beginPath();
         ctx.arc((prevMouseX + e.offsetX)/2, (prevMouseY + e.offsetY)/2, radius, 0, 2*Math.PI);
-        ctx.stroke();
+        ctx.fill();
     }
     function drawTriangle(e) {
-        const baseWidth = Math.abs(e.offsetX - prevMouseX);
         const thirdPointX = prevMouseX * 2 - e.offsetX;
     
         ctx.beginPath();
@@ -90,9 +98,20 @@ window.onload = () => {
     }
 
     //event listeners
+    saveImageBtn.addEventListener("onclick", () => {
+        canvas.toDataURL();
+    });
+    strokeColorPicker.addEventListener("change", () => {
+        strokeColor = strokeColorPicker.value;
+
+    });
+    fillColorPicker.addEventListener("change", () => {
+        fillColor = fillColorPicker.value;
+    });
     sizeSlider.addEventListener("change", () => {
-        brushWidth = sizeSlider.value/5;
-    })
+        brushWidth = sizeSlider.value/4;
+    });
+
     canvas.addEventListener('mousedown', startDraw);
     canvas.addEventListener('mouseup', stopDrawing);
     canvas.addEventListener('mousemove', drawing);
