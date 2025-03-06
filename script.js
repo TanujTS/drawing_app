@@ -82,6 +82,7 @@ window.onload = () => {
     function drawRectangle(e) {
         ctx.beginPath();
         ctx.fillRect(prevMouseX, prevMouseY, e.offsetX - prevMouseX , e.offsetY - prevMouseY);
+        ctx.strokeRect(prevMouseX, prevMouseY, e.offsetX - prevMouseX , e.offsetY - prevMouseY);
     }
 
     function drawCircle(e) {
@@ -89,6 +90,7 @@ window.onload = () => {
         ctx.beginPath();
         ctx.arc((prevMouseX + e.offsetX)/2, (prevMouseY + e.offsetY)/2, radius, 0, 2*Math.PI);
         ctx.fill();
+        ctx.stroke();
     }
     function drawTriangle(e) {
         const thirdPointX = prevMouseX * 2 - e.offsetX;
@@ -98,6 +100,7 @@ window.onload = () => {
         ctx.lineTo(e.offsetX, e.offsetY);     
         ctx.lineTo(thirdPointX, e.offsetY);  
         ctx.closePath();
+        ctx.fill();
         ctx.stroke();
     }
 
