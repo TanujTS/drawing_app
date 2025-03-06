@@ -10,9 +10,13 @@ window.onload = () => {
           clearCanvasBtn = document.querySelector(".clear-canvas"),
           saveImageBtn = document.querySelector(".save-image");
 
-    canvas.width = canvas.offsetHeight;
-    canvas.height = canvas.offsetWidth;
-    ctx.lineCap = 'round';
+    function initializeCanvas() {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+        ctx.lineCap = 'round';
+    }
+    initializeCanvas();
+    window.addEventListener('resize', initializeCanvas);
     //variables
     let isDrawing = false,
         selectedTool = "brush",
@@ -90,9 +94,9 @@ window.onload = () => {
         const thirdPointX = prevMouseX * 2 - e.offsetX;
     
         ctx.beginPath();
-        ctx.moveTo(prevMouseX, prevMouseY);  // First point (start point)
-        ctx.lineTo(e.offsetX, e.offsetY);     // Second point (current mouse position)
-        ctx.lineTo(thirdPointX, e.offsetY);   // Third point (symmetric point)
+        ctx.moveTo(prevMouseX, prevMouseY);  
+        ctx.lineTo(e.offsetX, e.offsetY);     
+        ctx.lineTo(thirdPointX, e.offsetY);  
         ctx.closePath();
         ctx.stroke();
     }
@@ -123,4 +127,24 @@ window.onload = () => {
     canvas.addEventListener('mousemove', drawing);
     canvas.addEventListener('mouseout', stopDrawing);
 
+    //touch events
+    canvas.addEventListener('touchstart', handleTouch);
+    canvas.addEventListener('touchend', stopDrawing);
+    canvas.addEventListener('touchmove', handleTouch);
+
+    function handleTouch(e) {
+        e.preventDefault(); 
+        
+        const rect = canvas.getBoundingClientRect();
+        const touch = e.touches[0] || e.changedTouches[0];
+        
+        const touchEvent = {
+            offsetX: touch.clientX - rect.left,
+            offsetY: touch.clientY - rect.top
+        };
+        
+        if (e.type === 'touchstart') startDraw(touchEvent);
+        else if (e.type === 'touchmove') drawing(touchEvent);
+        else if (e.type === 'touchend') stopDrawing();
+    }
 };
